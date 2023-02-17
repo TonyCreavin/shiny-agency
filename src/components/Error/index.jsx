@@ -1,25 +1,42 @@
-import errorPic from '../../assets/404.svg';
 import styled from 'styled-components';
+import colors from '../../utils/style/colors';
+import { useTheme } from '../../utils/hooks';
+import ErrorIllustration from '../../assets/404.svg';
 
-const StyledDiv = styled.div`
+const ErrorWrapper = styled.div`
+  margin: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: between;
-  margin-top: 30px;
+  background-color: ${({ theme }) =>
+    theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
   align-items: center;
 `;
-const StyleImg = styled.img`
-  width: 70vw;
-  align-self: center;
+
+const ErrorTitle = styled.h1`
+  color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
+  font-weight: 300;
+`;
+
+const ErrorSubtitle = styled.h2`
+  color: ${({ theme }) => (theme === 'light' ? colors.secondary : '#ffffff')};
+  font-weight: 300;
+`;
+
+const Illustration = styled.img`
+  max-width: 800px;
 `;
 
 function Error() {
+  const { theme } = useTheme();
+
   return (
-    <StyledDiv>
-      <h1>Oups...</h1>
-      <StyleImg src={errorPic} alt="error pic" />
-      <h1>Oups 🙈 Cette page n'existe pas</h1>
-    </StyledDiv>
+    <ErrorWrapper theme={theme}>
+      <ErrorTitle theme={theme}>Oups...</ErrorTitle>
+      <Illustration src={ErrorIllustration} />
+      <ErrorSubtitle theme={theme}>
+        Il semblerait que la page que vous cherchez n’existe pas
+      </ErrorSubtitle>
+    </ErrorWrapper>
   );
 }
 

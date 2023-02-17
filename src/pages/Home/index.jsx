@@ -1,53 +1,63 @@
-import '../../App.css';
-import home from '../../assets/home-illustration.svg';
 import styled from 'styled-components';
-import colors from '../../utils/style/color';
+import colors from '../../utils/style/colors';
+import { StyledLink } from '../../utils/style/Atoms';
+import { useTheme } from '../../utils/hooks';
+import HomeIllustration from '../../assets/home-illustration.svg';
 
-const StyledButton = styled.button`
-  color: white;
-  padding: 10px;
-  max-width: 200px;
-  padding-right: 20px;
-  padding-left: 20px;
-  border-radius: 30px;
-  background-color: ${colors.primary};
+const HomeWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
-const StyledDiv = styled.div`
+const HomerContainer = styled.div`
+  margin: 30px;
+  background-color: ${({ theme }) =>
+    theme === 'light' ? colors.backgroundLight : colors.backgroundDark};
+  padding: 60px 90px;
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+`;
+
+const LeftCol = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30vw;
+  justify-content: center;
+  flex: 1;
+  ${StyledLink} {
+    max-width: 250px;
+  }
 `;
 
-const StyledDiv1 = styled.div`
-  display: flex;
-background-color: ${colors.backgroundLight}
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-`;
-const StyledH1 = styled.h1`
-  height: 200px;
-  font-size: 40px;
+const StyledTitle = styled.h2`
+  padding-bottom: 30px;
+  max-width: 280px;
+  line-height: 50px;
+  color: ${({ theme }) => (theme === 'light' ? '#000000' : '#ffffff')};
 `;
 
-const StyleImg = styled.img`
-  margin-top: 100px;
+const Illustration = styled.img`
+  flex: 1;
 `;
 
 function Home() {
+  const { theme } = useTheme();
+
   return (
-    <StyledDiv1>
-      <StyledDiv>
-        <StyledH1>
-          Repérez vos besoins, on s'occupe du reste, avec des meilleurs talents
-        </StyledH1>
-        <StyledButton>Faire le test</StyledButton>
-      </StyledDiv>
-      <StyledDiv>
-        <StyleImg src={home} alt="icon" />
-      </StyledDiv>
-    </StyledDiv1>
+    <HomeWrapper>
+      <HomerContainer theme={theme}>
+        <LeftCol>
+          <StyledTitle theme={theme}>
+            Repérez vos besoins, on s’occupe du reste, avec les meilleurs
+            talents
+          </StyledTitle>
+          <StyledLink to="/survey/1" $isFullLink>
+            Faire le test
+          </StyledLink>
+        </LeftCol>
+        <Illustration src={HomeIllustration} />
+      </HomerContainer>
+    </HomeWrapper>
   );
 }
 
